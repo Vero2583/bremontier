@@ -4,6 +4,9 @@ import 'dotenv/config'
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`http://localhost:${PORT}/api`)
+
+
+app.listen(PORT, () => { console.log(`serveur toutrne sur http://localhost:${PORT}/api`)
+
 })
+
