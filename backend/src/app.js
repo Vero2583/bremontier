@@ -3,7 +3,8 @@ import 'dotenv/config';
 import cors from 'cors';
 import helmet from 'helmet';
 
-
+import authRoutes from './routes/auth.route.js';
+import { authMiddleware, authorize } from './middlewares/auth.middleware.js';
 
 
 
@@ -15,7 +16,8 @@ app.use(cors({
 }));
 
 
-
+app.use('/api/auth', authRoutes);
+app.get('/',authMiddleware, authorize(['ADMIN', 'USER']), (req, res) => res.send('API Auth Backend fonctionne'));
 
 
 

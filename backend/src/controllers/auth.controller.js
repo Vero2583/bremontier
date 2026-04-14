@@ -11,7 +11,7 @@ import {
   saveResetPassword,
   updatePassword,
   verifyUser,
-} from "../models/user.model.js";
+} from "../models/auth.model.js";
 import { sendVerificationEmail, sendResetPasswordEmail } from "../config/mailer.js";
 
 
@@ -28,7 +28,7 @@ export const register = async (req, res) => {
 
     await createUser(email, passwordHash, verifyToken);
 
-    await sendVerificationMail(email, verifyToken);
+    await sendVerificationEmail(email, verifyToken);
 
     res.status(201).json({ message: "Compte créé , vérifier votre email", email });
   } catch (error) {
@@ -127,3 +127,18 @@ export const resetPassword = async (req, res) => {
     res.status(500).json({ message: "erreur serveur ", error: error.message });
   }
 };
+
+// La déconnexion du dashboard et de la base de données
+
+export const logout = (req, res) => {
+    try {
+        
+        const users_id = req.users.id
+        removeUserKey(users_id)
+
+        res.json({message: "déconnexion réussie"})
+
+    } catch (error) {
+        res.status(500).json({message: "erreur server", error: error.message})
+    }
+}
